@@ -1,0 +1,116 @@
+// Schema do portal ENTRELINHAS
+// Banco: SQLite localmente (arquivo prisma/dev.db). Para produção, troque
+// `provider` para "postgresql" e ajuste DATABASE_URL — os modelos são idênticos.
+// SQLite não tem enums; campos como `status`, `kind` e `subject` são strings
+// validadas na aplicação (ver src/lib/constants.ts).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// Artigos de opinião
+model Article {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  title       String
+  coverImage  String?
+  subject     String // slug da categoria/assunto
+  excerpt     String?
+  body        String
+  author      String           @default("Entrelinhas")
+  status      String           @default("draft") // draft | published
+  publishedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  collections CollectionItem[]
+}
+
+/// Áudios — usado por Playlist (canções) e Podcasts (episódios longos),
+/// diferenciados por `kind`.
+model AudioTrack {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  kind        String // playlist | podcast
+  title       String
+  coverImage  String?
+  description String? // letra (playlist) ou show notes (podcast)
+  audioUrl    String
+  duration    Int? // em segundos
+  season      Int?
+  episode     Int?
+  status      String           @default("draft")
+  publishedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  collections CollectionItem[]
+}
+
+/// Vídeos — embed (YouTube/Vimeo) ou upload próprio
+model Video {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  title       String
+  subject     String
+  description String?
+  source      String           @default("embed") // embed | upload
+  url         String // URL do embed ou caminho do arquivo
+  thumbnail   String?
+  status      String           @default("draft")
+  publishedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  collections CollectionItem[]
+}
+
+/// Especiais — dossiês que agregam conteúdos existentes de vários formatos
+model Collection {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  title       String
+  coverImage  String?
+  intro       String?
+  status      String           @default("draft")
+  publishedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  items       CollectionItem[]
+}
+
+/// Vínculo polimórfico entre uma coleção e um item (artigo, áudio ou vídeo)
+model CollectionItem {
+  id           String     @id @default(cuid())
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  order        Int        @default(0)
+  articleId    String?
+  article      Article?   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  audioId      String?
+  audio        AudioTrack? @relation(fields: [audioId], references: [id], onDelete: Cascade)
+  videoId      String?
+  video        Video?     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@index([collectionId])
+}
+
+/// Inscritos na newsletter
+model Subscriber {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  confirmed Boolean  @default(false)
+  source    String   @default("site")
+  consentAt DateTime @default(now())
+  createdAt DateTime @default(now())
+}
+
+/// Assuntos/categorias (reutilizáveis entre artigos e vídeos)
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+}
