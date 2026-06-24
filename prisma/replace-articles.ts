@@ -24,6 +24,7 @@ async function main() {
         excerpt: a.excerpt,
         body: a.body,
         author: a.author,
+        coverImage: a.coverImage,
         publishedAt: new Date(a.publishedAt),
         status: "published",
       },
