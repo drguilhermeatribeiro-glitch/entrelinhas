@@ -38,7 +38,10 @@ export default async function ArticlePage({
   const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
-  const paragraphs = article.body.split("\n").filter((p) => p.trim());
+  const blocks = article.body
+    .split("\n")
+    .map((b) => b.trim())
+    .filter(Boolean);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -80,9 +83,15 @@ export default async function ArticlePage({
       )}
 
       <div className="prose-reading mx-auto mt-10">
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
+        {blocks.map((block, i) =>
+          block.startsWith("## ") ? (
+            <h2 key={i}>{block.slice(3)}</h2>
+          ) : block.startsWith("### ") ? (
+            <h3 key={i}>{block.slice(4)}</h3>
+          ) : (
+            <p key={i}>{block}</p>
+          )
+        )}
       </div>
 
       <hr className="my-10 border-border" />

@@ -20,7 +20,9 @@ export const NAV_LINKS = [
 /** Assuntos/categorias usados por artigos e vídeos */
 export const SUBJECTS = [
   { slug: "politica", name: "Política" },
+  { slug: "espiritualidade", name: "Espiritualidade" },
   { slug: "cultura", name: "Cultura" },
+  { slug: "interdisciplinar", name: "Interdisciplinar" },
   { slug: "ciencia-tecnologia", name: "Ciência e Tecnologia" },
   { slug: "entretenimento", name: "Entretenimento" },
   { slug: "saude", name: "Saúde" },
