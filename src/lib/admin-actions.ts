@@ -90,12 +90,10 @@ export async function saveArticle(formData: FormData) {
   const existing = id
     ? await prisma.article.findUnique({ where: { id } })
     : null;
-  const slug = await uniqueSlug(
-    "article",
-    title,
-    optStr(formData, "slug") ?? undefined,
-    id ?? undefined
-  );
+  // Ao editar, preserva o slug (URL) existente; só gera ao criar.
+  const slug =
+    existing?.slug ??
+    (await uniqueSlug("article", title, optStr(formData, "slug") ?? undefined));
 
   const data = {
     title,
@@ -133,12 +131,9 @@ export async function saveAudio(formData: FormData) {
   const existing = id
     ? await prisma.audioTrack.findUnique({ where: { id } })
     : null;
-  const slug = await uniqueSlug(
-    "audioTrack",
-    title,
-    optStr(formData, "slug") ?? undefined,
-    id ?? undefined
-  );
+  const slug =
+    existing?.slug ??
+    (await uniqueSlug("audioTrack", title, optStr(formData, "slug") ?? undefined));
 
   const data = {
     title,
@@ -177,12 +172,9 @@ export async function saveVideo(formData: FormData) {
   const existing = id
     ? await prisma.video.findUnique({ where: { id } })
     : null;
-  const slug = await uniqueSlug(
-    "video",
-    title,
-    optStr(formData, "slug") ?? undefined,
-    id ?? undefined
-  );
+  const slug =
+    existing?.slug ??
+    (await uniqueSlug("video", title, optStr(formData, "slug") ?? undefined));
 
   const data = {
     title,
@@ -219,12 +211,9 @@ export async function saveCollection(formData: FormData) {
   const existing = id
     ? await prisma.collection.findUnique({ where: { id } })
     : null;
-  const slug = await uniqueSlug(
-    "collection",
-    title,
-    optStr(formData, "slug") ?? undefined,
-    id ?? undefined
-  );
+  const slug =
+    existing?.slug ??
+    (await uniqueSlug("collection", title, optStr(formData, "slug") ?? undefined));
 
   // Itens vinculados vêm como múltiplos campos "items" no formato "tipo:id"
   const rawItems = formData.getAll("items").map(String).filter(Boolean);
