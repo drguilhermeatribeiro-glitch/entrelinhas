@@ -54,6 +54,18 @@ export function ArticleForm({ article }: { article?: Article }) {
         </Field>
 
         <Field
+          label="PDF do artigo (URL)"
+          hint="Link direto para o PDF (botão 'Baixar' do artigo). Em branco, o botão não aparece."
+        >
+          <Input
+            name="pdfUrl"
+            type="text"
+            placeholder="https://... ou /artigos/pdf/arquivo.pdf"
+            defaultValue={article?.pdfUrl ?? ""}
+          />
+        </Field>
+
+        <Field
           label="Corpo do artigo"
           hint="Cada quebra de linha inicia um novo parágrafo."
         >

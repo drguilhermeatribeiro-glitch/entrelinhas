@@ -102,6 +102,7 @@ export async function saveArticle(formData: FormData) {
     excerpt: optStr(formData, "excerpt"),
     body: str(formData, "body"),
     coverImage: optStr(formData, "coverImage"),
+    pdfUrl: optStr(formData, "pdfUrl"),
     author: str(formData, "author") || "Entrelinhas",
     ...publishFields(status, existing?.publishedAt),
   };

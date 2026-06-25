@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { getArticleBySlug } from "@/lib/data";
 import { CoverImage } from "@/components/cover-image";
 import { Badge } from "@/components/ui/badge";
@@ -67,9 +67,20 @@ export default async function ArticlePage({
             {article.excerpt}
           </p>
         )}
-        <p className="mt-4 text-sm text-muted-foreground">
-          Por <span className="text-foreground">{article.author}</span>
-        </p>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">
+            Por <span className="text-foreground">{article.author}</span>
+          </p>
+          {article.pdfUrl && (
+            <a
+              href={article.pdfUrl}
+              download={`${article.slug}.pdf`}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              <Download className="h-4 w-4" /> Baixar PDF
+            </a>
+          )}
+        </div>
       </header>
 
       {article.coverImage && (
@@ -95,7 +106,18 @@ export default async function ArticlePage({
       </div>
 
       <hr className="my-10 border-border" />
-      <ShareButtons title={article.title} />
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <ShareButtons title={article.title} />
+        {article.pdfUrl && (
+          <a
+            href={article.pdfUrl}
+            download={`${article.slug}.pdf`}
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90"
+          >
+            <Download className="h-4 w-4" /> Baixar PDF
+          </a>
+        )}
+      </div>
     </article>
   );
 }

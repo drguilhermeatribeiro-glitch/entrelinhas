@@ -22,6 +22,7 @@ model Article {
   subject     String // slug da categoria/assunto
   excerpt     String?
   body        String
+  pdfUrl      String? // PDF do artigo para download
   author      String           @default("Entrelinhas")
   status      String           @default("draft") // draft | published
   publishedAt DateTime?
