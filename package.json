@@ -12,6 +12,7 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:articles": "tsx prisma/replace-articles.ts",
     "db:add-comp": "tsx prisma/add-entrelinhas-articles.ts",
+    "pdf:comp": "tsx prisma/comp-pdfs.ts && python scripts/article-pdf.py prisma/_pdf-input.json",
     "db:studio": "prisma studio",
     "db:reset": "prisma db push --force-reset && tsx prisma/seed.ts"
   },
