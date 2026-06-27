@@ -94,15 +94,29 @@ export default async function ArticlePage({
       )}
 
       <div className="prose-reading mx-auto mt-10">
-        {blocks.map((block, i) =>
-          block.startsWith("## ") ? (
-            <h2 key={i}>{block.slice(3)}</h2>
-          ) : block.startsWith("### ") ? (
-            <h3 key={i}>{block.slice(4)}</h3>
-          ) : (
-            <p key={i}>{block}</p>
-          )
-        )}
+        {blocks.map((block, i) => {
+          const img = block.match(/^!\[(.*?)\]\((.*?)\)$/);
+          if (img) {
+            return (
+              <figure key={i} className="my-8">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img[2]}
+                  alt={img[1] || article.title}
+                  className="w-full rounded-card"
+                />
+                {img[1] && (
+                  <figcaption className="mt-2 text-center text-sm text-muted-foreground">
+                    {img[1]}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          }
+          if (block.startsWith("## ")) return <h2 key={i}>{block.slice(3)}</h2>;
+          if (block.startsWith("### ")) return <h3 key={i}>{block.slice(4)}</h3>;
+          return <p key={i}>{block}</p>;
+        })}
       </div>
 
       <hr className="my-10 border-border" />
