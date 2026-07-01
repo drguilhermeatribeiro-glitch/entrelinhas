@@ -3,34 +3,37 @@
 /* Tema escuro acionado por classe (.dark), controlado pelo next-themes */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------- Tokens de design (modo claro) ---------- */
+/* ---------- Tokens de design — paleta da marca ENTRELINHAS ----------
+   Baseada na logomarca: preto, vermelho vivo, cinza-escuro e branco. */
 :root {
-  --background: #faf8f3; /* off-white quente, ar de papel */
-  --foreground: #1b1a17; /* tinta quase preta */
-  --muted: #f0ece3; /* superfícies sutis */
-  --muted-foreground: #6c675e; /* texto secundário */
+  --background: #ffffff; /* branco */
+  --foreground: #0a0a0a; /* preto da marca */
+  --muted: #f4f4f5; /* cinza claro de superfícies */
+  --muted-foreground: #52525b; /* texto secundário */
   --card: #ffffff;
-  --card-foreground: #1b1a17;
-  --border: #e6e0d4;
-  --input: #e6e0d4;
-  --accent: #b4431f; /* terracota editorial */
+  --card-foreground: #0a0a0a;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --accent: #fd270a; /* vermelho exato da logomarca */
   --accent-foreground: #ffffff;
-  --ring: #b4431f;
+  --ink: #343434; /* cinza-escuro da logomarca */
+  --ring: #fd270a;
 }
 
-/* ---------- Tokens de design (modo escuro) ---------- */
+/* ---------- Modo escuro ---------- */
 .dark {
-  --background: #121110;
-  --foreground: #f2efe8;
-  --muted: #1f1d1a;
-  --muted-foreground: #a8a298;
-  --card: #1a1916;
-  --card-foreground: #f2efe8;
-  --border: #2c2926;
-  --input: #2c2926;
-  --accent: #e07043; /* terracota mais clara no escuro */
-  --accent-foreground: #1b1a17;
-  --ring: #e07043;
+  --background: #0a0a0a; /* preto */
+  --foreground: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --card: #141414;
+  --card-foreground: #fafafa;
+  --border: #272727;
+  --input: #272727;
+  --accent: #fd270a; /* vermelho da marca */
+  --accent-foreground: #ffffff;
+  --ink: #d4d4d8;
+  --ring: #fd270a;
 }
 
 /* ---------- Mapeamento para utilitários do Tailwind v4 ---------- */
@@ -45,6 +48,7 @@
   --color-input: var(--input);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-ink: var(--ink);
   --color-ring: var(--ring);
 
   --font-sans: var(--font-inter);

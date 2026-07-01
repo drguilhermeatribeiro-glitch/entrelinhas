@@ -67,7 +67,7 @@ export function ArticleForm({ article }: { article?: Article }) {
 
         <Field
           label="Corpo do artigo"
-          hint="Cada quebra de linha inicia um novo parágrafo."
+          hint="Aceita HTML. Sem HTML: cada linha vira parágrafo, `## titulo` vira subtítulo e `![descrição](url)` insere imagem."
         >
           <Textarea
             name="body"

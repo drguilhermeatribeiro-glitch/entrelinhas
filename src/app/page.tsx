@@ -6,15 +6,17 @@ import {
   getAudio,
   getVideos,
   getCollections,
+  getHighlights,
 } from "@/lib/data";
 import { ContentCard } from "@/components/content-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SubscribeForm } from "@/components/subscribe-form";
+import { HighlightCarousel } from "@/components/highlight-carousel";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/constants";
 
 export default async function HomePage() {
-  const [feed, articles, songs, podcasts, videos, collections] =
+  const [feed, articles, songs, podcasts, videos, collections, highlights] =
     await Promise.all([
       getRecentFeed(6),
       getArticles(),
@@ -22,6 +24,7 @@ export default async function HomePage() {
       getAudio("podcast"),
       getVideos(),
       getCollections(),
+      getHighlights(),
     ]);
 
   const [highlight, ...rest] = feed;
@@ -54,7 +57,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ---------- Em destaque ---------- */}
+      {/* ---------- Destaques (carrossel gerenciado no admin) ---------- */}
+      {highlights.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pt-14 sm:px-6">
+          <SectionHeading title="Destaques" />
+          <HighlightCarousel slides={highlights} />
+        </section>
+      )}
+
+      {/* ---------- Em destaque (recentes) ---------- */}
       {highlight && (
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <SectionHeading

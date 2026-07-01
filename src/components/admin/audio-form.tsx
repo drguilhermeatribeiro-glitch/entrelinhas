@@ -46,7 +46,7 @@ export function AudioForm({ audio }: { audio?: AudioTrack }) {
 
         <Field
           label="Descrição / letra / show notes"
-          hint="Para canções, a letra. Para podcasts, as notas do episódio."
+          hint="Para canções, a letra. Para podcasts, as notas do episódio. Aceita HTML."
         >
           <Textarea name="description" defaultValue={audio?.description ?? ""} />
         </Field>

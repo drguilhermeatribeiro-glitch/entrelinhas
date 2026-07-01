@@ -55,7 +55,7 @@ export function VideoForm({ video }: { video?: Video }) {
           />
         </Field>
 
-        <Field label="Descrição">
+        <Field label="Descrição" hint="Aceita HTML.">
           <Textarea name="description" defaultValue={video?.description ?? ""} />
         </Field>
 

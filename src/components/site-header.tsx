@@ -8,6 +8,7 @@ import { NAV_LINKS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -17,13 +18,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-baseline gap-0.5 font-serif text-xl font-semibold tracking-tight"
-          onClick={() => setOpen(false)}
-        >
-          <span>Entre</span>
-          <span className="text-accent">linhas</span>
+        <Link href="/" onClick={() => setOpen(false)} aria-label="Entrelinhas">
+          <BrandLogo markClassName="h-7 w-auto" />
         </Link>
 
         {/* Navegação desktop */}

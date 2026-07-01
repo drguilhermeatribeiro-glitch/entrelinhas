@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { getVideoBySlug } from "@/lib/data";
 import { VideoEmbed } from "@/components/video-embed";
 import { ShareButtons } from "@/components/share-buttons";
+import { RichContent } from "@/components/rich-content";
 import { Badge } from "@/components/ui/badge";
 import { subjectName } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
@@ -53,10 +54,8 @@ export default async function VideoPage({
         <VideoEmbed url={video.url} source={video.source} title={video.title} />
       </div>
 
-      {video.description && (
-        <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-          {video.description}
-        </p>
+      {video.description?.trim() && (
+        <RichContent content={video.description} className="mt-6" />
       )}
 
       <hr className="my-10 border-border" />

@@ -258,3 +258,33 @@ export async function deleteCollection(formData: FormData) {
   revalidateAll(["/especiais"]);
   redirect("/admin/especiais");
 }
+
+// ---------------- Destaques (carrossel) ----------------
+export async function saveHighlight(formData: FormData) {
+  await requireSession();
+  const id = optStr(formData, "id");
+
+  const data = {
+    title: str(formData, "title"),
+    subtitle: optStr(formData, "subtitle"),
+    imageUrl: optStr(formData, "imageUrl"),
+    content: optStr(formData, "content"),
+    linkUrl: optStr(formData, "linkUrl"),
+    linkLabel: optStr(formData, "linkLabel"),
+    order: optInt(formData, "order") ?? 0,
+    status: str(formData, "status") || "draft",
+  };
+
+  if (id) await prisma.highlight.update({ where: { id }, data });
+  else await prisma.highlight.create({ data });
+
+  revalidateAll([]);
+  redirect("/admin/destaques");
+}
+
+export async function deleteHighlight(formData: FormData) {
+  await requireSession();
+  await prisma.highlight.delete({ where: { id: str(formData, "id") } });
+  revalidateAll([]);
+  redirect("/admin/destaques");
+}

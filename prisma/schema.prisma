@@ -115,3 +115,18 @@ model Category {
   name String
   slug String @unique
 }
+
+/// Slides da seção "Destaques" (carrossel da home)
+model Highlight {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String?
+  imageUrl  String?
+  content   String? // texto ou HTML opcional exibido no slide
+  linkUrl   String?
+  linkLabel String?
+  order     Int      @default(0)
+  status    String   @default("draft") // draft | published
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

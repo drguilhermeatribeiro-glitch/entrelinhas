@@ -5,6 +5,14 @@ import type { ContentType } from "@/lib/constants";
 const PUBLISHED = { status: "published" } as const;
 const byDate = { publishedAt: "desc" } as const;
 
+// ---------- Destaques (carrossel) ----------
+export function getHighlights() {
+  return prisma.highlight.findMany({
+    where: PUBLISHED,
+    orderBy: [{ order: "asc" }, { createdAt: "desc" }],
+  });
+}
+
 // ---------- Artigos ----------
 export function getArticles(subject?: string) {
   return prisma.article.findMany({

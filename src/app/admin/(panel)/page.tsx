@@ -1,12 +1,21 @@
 import Link from "next/link";
-import { FileText, Music, Video, Layers, Mail, Plus } from "lucide-react";
+import {
+  FileText,
+  Music,
+  Video,
+  Layers,
+  Mail,
+  GalleryHorizontalEnd,
+  Plus,
+} from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [articles, audios, videos, collections, subscribers] =
+  const [highlights, articles, audios, videos, collections, subscribers] =
     await Promise.all([
+      prisma.highlight.count(),
       prisma.article.count(),
       prisma.audioTrack.count(),
       prisma.video.count(),
@@ -15,6 +24,7 @@ export default async function AdminDashboard() {
     ]);
 
   const stats = [
+    { label: "Destaques", value: highlights, href: "/admin/destaques", icon: GalleryHorizontalEnd },
     { label: "Artigos", value: articles, href: "/admin/artigos", icon: FileText },
     { label: "Áudios", value: audios, href: "/admin/audios", icon: Music },
     { label: "Vídeos", value: videos, href: "/admin/videos", icon: Video },
@@ -23,6 +33,7 @@ export default async function AdminDashboard() {
   ];
 
   const quick = [
+    { label: "Novo destaque", href: "/admin/destaques/novo" },
     { label: "Novo artigo", href: "/admin/artigos/novo" },
     { label: "Novo áudio", href: "/admin/audios/novo" },
     { label: "Novo vídeo", href: "/admin/videos/novo" },
@@ -38,7 +49,7 @@ export default async function AdminDashboard() {
         Bem-vindo de volta. Gerencie o conteúdo do Entrelinhas.
       </p>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {stats.map((s) => {
           const Icon = s.icon;
           return (

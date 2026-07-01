@@ -6,6 +6,7 @@ import { getArticleBySlug } from "@/lib/data";
 import { CoverImage } from "@/components/cover-image";
 import { Badge } from "@/components/ui/badge";
 import { ShareButtons } from "@/components/share-buttons";
+import { RichContent } from "@/components/rich-content";
 import { subjectName } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 
@@ -37,11 +38,6 @@ export default async function ArticlePage({
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) notFound();
-
-  const blocks = article.body
-    .split("\n")
-    .map((b) => b.trim())
-    .filter(Boolean);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -93,31 +89,7 @@ export default async function ArticlePage({
         />
       )}
 
-      <div className="prose-reading mx-auto mt-10">
-        {blocks.map((block, i) => {
-          const img = block.match(/^!\[(.*?)\]\((.*?)\)$/);
-          if (img) {
-            return (
-              <figure key={i} className="my-8">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={img[2]}
-                  alt={img[1] || article.title}
-                  className="w-full rounded-card"
-                />
-                {img[1] && (
-                  <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-                    {img[1]}
-                  </figcaption>
-                )}
-              </figure>
-            );
-          }
-          if (block.startsWith("## ")) return <h2 key={i}>{block.slice(3)}</h2>;
-          if (block.startsWith("### ")) return <h3 key={i}>{block.slice(4)}</h3>;
-          return <p key={i}>{block}</p>;
-        })}
-      </div>
+      <RichContent content={article.body} className="mx-auto mt-10" />
 
       <hr className="my-10 border-border" />
       <div className="flex flex-wrap items-center justify-between gap-4">

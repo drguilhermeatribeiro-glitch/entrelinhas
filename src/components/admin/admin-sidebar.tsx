@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
+  GalleryHorizontalEnd,
   FileText,
   Music,
   Video,
@@ -14,9 +15,11 @@ import {
 } from "lucide-react";
 import { logoutAction } from "@/lib/admin-actions";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "@/components/brand-logo";
 
 const LINKS = [
   { href: "/admin", label: "Painel", icon: LayoutDashboard, exact: true },
+  { href: "/admin/destaques", label: "Destaques", icon: GalleryHorizontalEnd },
   { href: "/admin/artigos", label: "Artigos", icon: FileText },
   { href: "/admin/audios", label: "Áudios", icon: Music },
   { href: "/admin/videos", label: "Vídeos", icon: Video },
@@ -29,12 +32,9 @@ export function AdminSidebar({ email }: { email: string }) {
 
   return (
     <aside className="flex w-full flex-col gap-1 border-b border-border bg-card p-4 md:h-screen md:w-60 md:shrink-0 md:border-b-0 md:border-r">
-      <Link
-        href="/admin"
-        className="mb-4 hidden font-serif text-xl font-semibold tracking-tight md:block"
-      >
-        Entre<span className="text-accent">linhas</span>
-        <span className="mt-0.5 block text-xs font-sans font-normal text-muted-foreground">
+      <Link href="/admin" className="mb-4 hidden md:block" aria-label="Entrelinhas">
+        <BrandLogo markClassName="h-6 w-auto" className="[&>span]:text-lg" />
+        <span className="mt-1 block text-xs text-muted-foreground">
           Administração
         </span>
       </Link>

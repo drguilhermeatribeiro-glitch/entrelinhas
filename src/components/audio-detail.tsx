@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { CoverImage } from "@/components/cover-image";
 import { AudioPlayer } from "@/components/audio-player";
 import { ShareButtons } from "@/components/share-buttons";
+import { RichContent } from "@/components/rich-content";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatDuration } from "@/lib/utils";
 
@@ -22,7 +23,6 @@ export function AudioDetail({ audio }: { audio: AudioLike }) {
   const isPodcast = audio.kind === "podcast";
   const backHref = isPodcast ? "/podcasts" : "/playlist";
   const backLabel = isPodcast ? "Podcasts" : "Playlist";
-  const paragraphs = audio.description?.split("\n").filter((l) => l.trim()) ?? [];
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -65,14 +65,12 @@ export function AudioDetail({ audio }: { audio: AudioLike }) {
         <AudioPlayer src={audio.audioUrl} podcast={isPodcast} />
       </div>
 
-      {paragraphs.length > 0 && (
-        <div className="prose-reading mt-10">
-          <h2>{isPodcast ? "Sobre o episódio" : "Sobre a canção"}</h2>
-          {paragraphs.map((p, i) => (
-            <p key={i} className="whitespace-pre-line">
-              {p}
-            </p>
-          ))}
+      {audio.description?.trim() && (
+        <div className="mt-10">
+          <h2 className="font-serif text-xl font-semibold">
+            {isPodcast ? "Sobre o episódio" : "Sobre a canção"}
+          </h2>
+          <RichContent content={audio.description} className="mt-3" />
         </div>
       )}
 

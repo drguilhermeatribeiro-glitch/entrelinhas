@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NAV_LINKS, SITE } from "@/lib/constants";
 import { SubscribeForm } from "@/components/subscribe-form";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function SiteFooter() {
   return (
@@ -8,11 +9,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <Link
-              href="/"
-              className="font-serif text-2xl font-semibold tracking-tight"
-            >
-              Entre<span className="text-accent">linhas</span>
+            <Link href="/" aria-label="Entrelinhas">
+              <BrandLogo markClassName="h-8 w-auto" className="[&>span]:text-2xl" />
             </Link>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {SITE.description}
